@@ -1,0 +1,79 @@
+les libs
+
+la struct client
+	int id
+	char msg[100000]
+client[1024]
+
+l'init des var
+
+fonct fatal()
+
+fonct send_all()
+
+	for(0 to max_fd)
+
+		if(FD_ISSET && i != fd)
+
+			send(buffWrite)
+
+main(ac av)
+
+	verif des arguments
+	& enregistrement du port
+
+	bzero des clients & de la sock_list
+
+	creation serv_sock
+	- fatal() == -1
+
+	set de max_fd et de la sock_list
+
+	creation du sockaddr_in [fournis dans le main]
+
+	demarage de bind & listen
+	- fatal() < 0
+
+	while(1)
+
+		set de cpyRead & cpyWrite de sock_list
+		if select()
+		- continue < 0
+
+		for(0 to max_fd)
+
+			if(FD_ISSET && s == serv_sock)
+
+				creation du socket client avec accept
+				- continue < 0
+				re-set de max_fd soit à cli_sock soit à lui-meme
+				set de l'id du client
+				rajout du client dans sock_list (FD_SET)
+				sprintf() le message de co du client & envoie a send_all
+				break
+			
+			if(pareil mais != serv_sock)
+
+				res de recv pour lire depuis s
+
+				if(res <= 0)
+					
+					sprintf() le message de deco du client & evois a send_all
+					retrait du client de sock_list (FD_CLR)
+					close du fd
+					break
+				
+				else
+
+					for(0 to res, set j a strlen de .msg)
+
+						set .msg[j] to bufRead[i]
+
+						if(.msg[j] == '\n')
+
+							.msg[j] = '\0'
+							sprintf() du message du client & send_all
+							bzero de .msg
+							! j = -1 !
+
+					break apres la for
